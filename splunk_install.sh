@@ -1,6 +1,7 @@
 #!/bin/bash
 ######script for installing Splunk Enterprise 7.2.6#####################################
 ######you can definite username password  directory of Splunk installation by yourself######
+######default dir user password are /opt wangteng wangteng123#######
 
 # judge the user of the scipt
 [ ${UID} -ne 0 ] && { echo "the script need root.";exit 1; }
@@ -10,8 +11,8 @@
 splunk_dir=${1:-"/opt"}
 
 # set user password of splunk
-splunk_user=${2:?"please enter username for \$2"}
-splunk_password=${3:?"please enter password for \$3"}
+splunk_user=${2:-"wangteng"}
+splunk_password=${3:-"wangteng123"}
 
 # configure dir of splunk installation
 [ -d ${splunk_dir} ] || mkdir -p ${splunk_dir}
