@@ -14,11 +14,11 @@ splunk_user=${2:?"please enter username for \$2"}
 splunk_password=${3:?"please enter password for \$3"}
 
 # configure dir of splunk installation
-[ -d $1 ] && mkdir -p $1
+[ -d ${splunk_dir} ] || mkdir -p ${splunk_dir}
 
 # download binary package and extract file
 [ -f /usr/bin/wget ] && { cd /opt;wget https://download.splunk.com/products/splunk/releases/7.2.6/linux/splunk-7.2.6-c0bf0f679ce9-Linux-x86_64.tgz; } || yum -y install wget
-[[ -f /usr/bin/gzip && -f /usr/bin/unzip ]] && tar zvxf splunk-7.2.6-c0bf0f679ce9-Linux-x86_64.tgz -C $1 || yum -y install gzip unzip
+[[ -f /usr/bin/gzip && -f /usr/bin/unzip ]] && tar zvxf splunk-7.2.6-c0bf0f679ce9-Linux-x86_64.tgz -C ${splunk_dir} || yum -y install gzip unzip
 
 # add splunk excute file into environment 
 cat <<EOF>> /etc/profile
@@ -32,13 +32,13 @@ echo "source /etc/profile" >> /root/.bashrc
 [ -f /usr/bin/expect ] || yum -y install expect
 /usr/bin/expect << EOF
 set timeout 200
-spawn $1/splunk/bin/splunk start --accept-license
+spawn ${splunk_dir}/splunk/bin/splunk start --accept-license
 expect "username"
-send "$2\r"
+send "${splunk_user}\r"
 expect "password"
-send "$3\r"
+send "${splunk_password}\r"
 expect "password"
-send "$3\r"
+send "${splunk_password}\r"
 set timeout 200
 expect eof
 exit
