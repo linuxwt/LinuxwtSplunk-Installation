@@ -1,7 +1,8 @@
 #!/bin/bash
 # description: splunk start script
 # chkconfig: 2345 10 90 
-[ -f /etc/init.d/functions ] &&  . /etc/init.d/functions || exit 1
+[ -f /etc/init.d/functions ] &&  . /etc/init.d/functions || exit 1  
+[ -f /usr/bin/lsof ] || yum -y install lsof  
 start () {
     [ $(lsof -i:8089 | wc -l) -gt 0 ] && action "splunk start ..."  /bin/true || /data/splunk/bin/splunk start
     sleep 10
