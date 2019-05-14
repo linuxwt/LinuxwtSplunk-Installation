@@ -18,7 +18,7 @@ splunk_password=${3:-"wangteng123"}
 [ -d ${splunk_dir} ] || mkdir -p ${splunk_dir}
 
 # download binary package and extract file
-tar zvxf splunkforwarder-7.2.6-c0bf0f679ce9-Linux-x86_64.tgz -C ${splunk_dir}
+yum -y install gzip zip &&  tar zvxf splunk-7.2.6-c0bf0f679ce9-Linux-x86_64.tgz -C ${splunk_dir}
 
 # add splunk excute file into environment 
 cat <<EOF>> /etc/profile
