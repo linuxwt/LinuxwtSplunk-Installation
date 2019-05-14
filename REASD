@@ -1,0 +1,2 @@
+splunk_start里的启动路径比如/opt/splunk一定要和splunk_install.sh里的安装路径$splunk_dir/splunk一致
+splunkforwarder_start.sh里的启动路径比如/opt/splunkforwarder一定要和安装路径$splunk_dir/splunkforwarder一致
