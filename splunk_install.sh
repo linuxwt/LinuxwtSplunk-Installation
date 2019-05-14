@@ -23,7 +23,7 @@ splunk_password=${3:-"wangteng123"}
 
 # add splunk excute file into environment 
 cat <<EOF>> /etc/profile
-export SPLUNK_HOME=$1/splunk
+export SPLUNK_HOME=${splunk_dir}/splunk
 export PATH=\$SPLUNK_HOME/bin:\$PATH
 EOF
 
