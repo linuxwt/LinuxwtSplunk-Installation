@@ -5,6 +5,7 @@
 #####splunk_install.sh is local script#################
 
 remotesh () {
+[[ -f /usr/bin/expect && -f /usr/bin/scp ]] || yum -y install lrzsz expect
 /usr/bin/expect << EOF
 set timeout 200
 spawn scp splunk_install.sh ${ip}:/root
