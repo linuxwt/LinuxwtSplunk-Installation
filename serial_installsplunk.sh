@@ -1,3 +1,4 @@
+#!/bin/bash
 
 toolinstall () {
 [[ -f /usr/bin/expect && -f /usr/bin/scp ]] || yum -y install lrzsz expect
