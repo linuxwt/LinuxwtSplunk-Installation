@@ -19,6 +19,8 @@ splunk_password=${3:-"wangteng123"}
 
 # download binary package and extract file
 [ -f /usr/bin/wget ] && { cd /opt;wget https://download.splunk.com/products/universalforwarder/releases/7.2.6/linux/splunkforwarder-7.2.6-c0bf0f679ce9-Linux-x86_64.tgz; } || yum -y install wget
+yum -y install gzip zip &&  tar zvxf splunkforwarder-7.2.6-c0bf0f679ce9-Linux-x86_64.tgz -C ${splunk_dir}
+
 
 # add splunk excute file into environment 
 cat <<EOF>> /etc/profile
