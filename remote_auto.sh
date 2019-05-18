@@ -1,11 +1,18 @@
-#!/bin/bash
-#######remote auto install Splunk Enterprise7.2.6###########
-######ip.txt storage remote server ip address and root password########
-#####default Splunk dir "/data"  user "wangshan" password "wangshan123"#######
-#####splunk_install.sh is local script#################
+
+toolinstall () {
+[[ -f /usr/bin/expect && -f /usr/bin/scp ]] || yum -y install lrzsz expect
+/usr/bin/expect << EOF
+set timeout 200
+spawn ssh ${ip} -o StrictHostKeyChecking=no "yum -y install lrzsz expect"
+expect "password"
+send "${passwd}\r"
+set timeout 200
+expect eof
+exit
+EOF
+}
 
 remotesh () {
-[[ -f /usr/bin/expect && -f /usr/bin/scp ]] || yum -y install lrzsz expect
 /usr/bin/expect << EOF
 set timeout 200
 spawn scp splunk_install.sh ${ip}:/root
@@ -18,7 +25,7 @@ EOF
 
 /usr/bin/expect << EOF
 set timeout 200
-spawn ssh ${ip} -o StrictHostKeyChecking=no /root/splunk_install.sh /data wangshan wangshan123
+spawn ssh ${ip} -o StrictHostKeyChecking=no /root/splunk_install.sh
 expect "password"
 send "${passwd}\r"
 set timeout 200
@@ -27,7 +34,10 @@ exit
 EOF
 }
 
+c=$(basename $(ls -l /etc/sysconfig/network-scripts/* | grep ifcfg | grep -v lo | awk -F ' ' '{print $9}'))
+netcard=${c//ifcfg-/}
+local_ip=$(ip addr | grep ${netcard} | grep inet | awk -F ' ' '{print $2}' | awk -F '/' '{print $1}')
 while read ip passwd
 do
-    remotesh
+[ $ip != "${local_ip}" ] && { toolinstall;remotesh; } || $(pwd)/splunk_install.sh
 done < ip.txt
