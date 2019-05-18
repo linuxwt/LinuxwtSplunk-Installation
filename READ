@@ -1,4 +1,7 @@
+脚本使用须知：  
 1、splunk_install.sh和splunkforwarder_install.sh可以单独执行安装splunk enterprise和splunk forward
 2、serial_installsplunk.sh是可以批量安装splunk enterprise,ip.txt存放目标服务器的远程连接用户密码，这里使用的是root用户
 3、splunk_start里的启动路径比如/opt/splunk一定要和splunk_install.sh里的安装路径$splunk_dir/splunk一致
 4、splunkforwarder_start.sh里的启动路径比如/opt/splunkforwarder一定要和splunkforwarder_install.sh里的安装路径$splunk_dir/splunkforwarder一致
+5、如果你是在流量有限或者网速不稳定的环境希望使用serial_installsplunk.sh批量安装splunk enterprise时，请先手动下载splun enterprise的tgz包，上传至
+每一台目标服务器的目录/opt下面，再执行脚本serial_installsplunk.sh
