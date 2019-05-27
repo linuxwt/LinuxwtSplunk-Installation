@@ -4,13 +4,13 @@
 [ -f /etc/init.d/functions ] &&  . /etc/init.d/functions || exit 1  
 [ -f /usr/bin/lsof ] || yum -y install lsof  
 start () {
-    [ $(lsof -i:8089 | wc -l) -gt 0 ] && action "splunk start ..."  /bin/true || /data/splunk/bin/splunk start
+    [ $(lsof -i:8089 | wc -l) -gt 0 ] && action "splunk start ..."  /bin/true || /opt/splunk/bin/splunk start
     sleep 10
     [ $(lsof -i:8089 | wc -l) -gt 0 ] && action "splunk start ..."  /bin/true
     return $RETVAL
 }
 stop () {
-    [ $(lsof -i:8089 | wc -l) -eq 0 ] && action "rsyncd is not running..." /bin/true || /data/splunk/bin/splunk stop
+    [ $(lsof -i:8089 | wc -l) -eq 0 ] && action "rsyncd is not running..." /bin/true || /opt/splunk/bin/splunk stop
     sleep 10
     [ $(lsof -i:8089 | wc -l) -eq 0 ] && action "rsyncd is not running..." /bin/true
     return $RETVAL
